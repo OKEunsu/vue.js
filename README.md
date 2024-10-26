@@ -137,7 +137,7 @@ HTML 태그안의 내용 데이터바인등은 {{어쩌구}}
 See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 축약
-> v-bind -> :
+> v-bind -> :  
 > v-on -> @
 
 ### v-model(양방향 데이터 바인딩)
