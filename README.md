@@ -76,6 +76,44 @@ npm install vue bootstrap bootstrap-vue
 
 methods : {함수(){}}
 함수안에서 데이터 쓸 땐 this.데이터명
+```
+<script>
+import {ref} from 'vue'; 
+export default{
+  setup() {
+    const name = ref('Kossie Coder1'); // ref을 이용하면 바뀐값이 적용할 수 있다, ref는 value를 써야한다. -> object, value만 가능!
+    
+    const updateName = () =>{
+      name.value = 'Kossie Coder';
+      console.log(name);
+    }
+    return {
+      name,
+      updateName
+    };
+  }
+}
+</script>
+```
+```
+<script>
+import {reactive} from 'vue'; // reactive 
+export default{
+  setup() {
+    const name = reactive({"id" : 1}); // name.id로 변경이 가능하다. 
+    
+    const updateName = () =>{
+      name.id = 2;
+      console.log(name);
+    }
+    return {
+      name,
+      updateName
+    };
+  }
+}
+</script>
+```
   
 ### 동적인 UI만드는 법
 
@@ -97,3 +135,99 @@ HTML 태그안의 내용 데이터바인등은 {{어쩌구}}
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### 축약
+> v-bind -> :
+> v-on -> @
+
+### v-model(양방향 데이터 바인딩)
+```
+<template>
+  <input
+    type='text' 
+    v-model="name" 
+  >
+  <button 
+    class = 'btn btn-primary' 
+  @click="onSubmit">
+    Click
+  </button>
+</template>
+
+<script>
+import {ref} from 'vue';
+
+export default{
+  setup() {
+    const name = ref('Kossie');
+            
+    const onSubmit = () =>{
+      console.log(name.value)
+    }
+    
+    return {
+      name,
+      onSubmit,
+    };
+  }
+}
+</script>
+```
+Event Modifiers
+- .stop
+- .prevent
+- .capture
+- .self
+- .once
+- .passive
+
+```
+<template>
+  <div class = 'container'>
+    <h2>To-Do List</h2>
+    <form class="d-flex" @submit.prevent="onSubmit">
+      <div class ='flex-grow-1'>
+        <input
+        class="form-control mr-2"
+        type='text' 
+        v-model="todo" 
+        placeholder = 'Type new to-do'
+      >
+      </div>
+      <div>
+        <button 
+          class = 'btn btn-primary' 
+        @click="onSubmit"
+        type = "submit">
+          Add
+        </button>
+      </div>
+    </form>
+    {{ todos }}
+  </div>  
+</template>
+
+<script>
+import {ref} from 'vue';
+
+export default{
+  setup() {
+    const todo = ref('');
+    const todos = ref([]);
+            
+    const onSubmit = () =>{
+        todos.value.push({
+        id : Date.now(),
+        subject: todo.value
+      });
+    }
+    
+    return {
+      todo,
+      todos,
+      onSubmit,
+    };
+  }
+}
+</script>
+```
